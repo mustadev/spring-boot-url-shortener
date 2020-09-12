@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RedirectController {
     
-    @GetMapping("/{shortUrl}")
+    @GetMapping("/short/{shortUrl}")
     public ResponseEntity<Object> redirect(@PathVariable String shortUrl){
         // TODO validate shorturl.
         System.out.println("shrt url " + shortUrl);
