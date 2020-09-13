@@ -32,7 +32,15 @@ public class RedirectController {
             .build();
     }
 
-    
+    @PostMapping()
+    public ResponseEntity<ShortURL> generateShortURL(@RequestBody String longURL){
+        ShortURL shortURL = new ShortURL();
+        shortURL.setLongURL(longURL);
+        shortURL.setShortURL("localhost:8080/" + this.generateRandomString(4));
+        shortURL = this.shortURLService.save(shortURL);
+        return ResponseEntity.status(HttpStatus.CREATED).body(shortURL);
+    }
+
     public  String generateRandomString(int length){
         Random rnd = new Random();
         String chars = "azertyuiopqsdmwxcvbn";
