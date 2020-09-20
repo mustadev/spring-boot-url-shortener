@@ -5,7 +5,9 @@ import com.mustadev.urlshortener.entites.ShortURL;
 import com.mustadev.urlshortener.repositores.ShortURLRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ShortURLServiceImp implements ShortURLService {
 
     @Autowired

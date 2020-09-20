@@ -22,6 +22,7 @@ public class RedirectController {
     
     @Autowired
     private ShortURLService shortURLService;
+
     @GetMapping("/short/{shortUrl}")
     public ResponseEntity<Object> redirect(@PathVariable String shortUrl){
         // TODO validate shorturl.
@@ -37,7 +38,7 @@ public class RedirectController {
         ShortURL shortURL = new ShortURL();
         shortURL.setLongURL(longURL);
         shortURL.setShortURL("localhost:8080/" + this.generateRandomString(4));
-        shortURL = this.shortURLService.save(shortURL);
+        shortURL = shortURLService.save(shortURL);
         return ResponseEntity.status(HttpStatus.CREATED).body(shortURL);
     }
 
