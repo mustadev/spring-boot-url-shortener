@@ -5,3 +5,8 @@ this an implementation of of simple url shortener
 - Spring boot Back End.
 - React Front End.
 - Docker Depeloyment.
+
+## Run 
+```bash
+docker-composer up
+```
