@@ -1,4 +1,4 @@
-# spring-boot-url-shortner
+# Spring Boot Url Shortner
 this an implementation of of simple url shortener
 
 ## Features
