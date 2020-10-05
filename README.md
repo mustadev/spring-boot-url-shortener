@@ -2,9 +2,9 @@
 this an implementation of of simple url shortener
 
 ## Features
-- Spring boot Back End.
-- React Front End.
-- Docker Depeloyment.
+- [x] Spring boot Back End.
+- [ ] React Front End.
+- [ ] Docker Depeloyment.
 
 ## Run 
 ```bash
