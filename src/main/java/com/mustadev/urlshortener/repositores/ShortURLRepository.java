@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShortURLRepository  extends CrudRepository<ShortURL, Long> {
+public interface ShortURLRepository  extends CrudRepository<ShortURL, Integer> {
     
-    ShortURL findByShortURL(String shortURL);
 }
