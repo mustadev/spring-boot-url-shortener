@@ -5,7 +5,7 @@ import com.mustadev.urlshortener.entites.ShortURL;
 
 public interface ShortURLService {
     
-    public ShortURL find(String shortURL);
+    public ShortURL find(int id);
 
     public ShortURL save(ShortURL shortURL);
 
