@@ -13,8 +13,8 @@ public class ShortURLServiceImp implements ShortURLService {
     @Autowired
     private ShortURLRepository shortURLRepository;
     @Override
-    public ShortURL find(String shortURL) {
-        return shortURLRepository.findByShortURL(shortURL);
+    public ShortURL find(int id) {
+        return shortURLRepository.findById(id).orElseThrow();
     }
 
     @Override
