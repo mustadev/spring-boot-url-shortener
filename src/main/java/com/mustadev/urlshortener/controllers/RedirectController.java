@@ -1,9 +1,13 @@
 package com.mustadev.urlshortener.controllers;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpHeaders;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import com.mustadev.urlshortener.entites.ShortURL;
@@ -16,35 +20,55 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController()
+@RequestMapping("/short")
 public class RedirectController {
 
     @Autowired
     private ShortURLService shortURLService;
 
-    @GetMapping("/short/{shortLink}")
-    public ResponseEntity<String> redirect(@PathVariable String shortLink) {
+    @GetMapping("/{shortLink}")
+    public ResponseEntity redirect(@PathVariable String shortLink) {
         // TODO validate shorturl.
         System.out.println("shrt url " + shortLink);
-        // URI url = URI.create(shortUrl);
-        // return ResponseEntity.status(HttpStatus.PERMANENT_REDIRECT).location(url).build();
         var id = this.decode(shortLink);
-        var shortURL = shortURLService.find(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(shortURL.getLongURL());
+        try {
+            var shortURL = shortURLService.find(id);
+            return ResponseEntity.status(HttpStatus.PERMANENT_REDIRECT).location(new URL(shortURL.getLongURL()).toURI())
+                    .build();
+
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("mal formed Exception");
+        }
     }
 
-    @PostMapping("/long")
-    public ResponseEntity<String> generateShortURL(@RequestBody String longURL){
+    @PostMapping()
+    public ResponseEntity<Map<String, String>> generateShortURL(@RequestBody String longURL) {
+        var response = new HashMap<String, String>();
+        try {
+            var uri = new URL(longURL).toURI();
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("message", "failed");
+            response.put("error", "mal formed URL: " + longURL);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
         ShortURL shortURL = new ShortURL();
         shortURL.setLongURL(longURL);
         shortURL = shortURLService.save(shortURL);
         var shortURLLink = this.encode(shortURL.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(shortURLLink);
+        response.put("message", "success");
+        response.put("longURL", longURL);
+        response.put("shortURL", shortURLLink);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-    
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int BASE = ALPHABET.length();
