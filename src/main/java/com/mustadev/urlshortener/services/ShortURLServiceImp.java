@@ -1,6 +1,8 @@
 package com.mustadev.urlshortener.services;
 
 
+import java.util.NoSuchElementException;
+
 import com.mustadev.urlshortener.entites.ShortURL;
 import com.mustadev.urlshortener.repositores.ShortURLRepository;
 
@@ -13,7 +15,7 @@ public class ShortURLServiceImp implements ShortURLService {
     @Autowired
     private ShortURLRepository shortURLRepository;
     @Override
-    public ShortURL find(int id) {
+    public ShortURL find(int id) throws NoSuchElementException {
         return shortURLRepository.findById(id).orElseThrow();
     }
 
