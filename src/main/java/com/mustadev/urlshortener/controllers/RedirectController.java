@@ -15,6 +15,7 @@ import com.mustadev.urlshortener.services.ShortURLService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,11 +50,14 @@ public class RedirectController {
         }
     }
 
-    @PostMapping()
-    public ResponseEntity<Map<String, String>> generateShortURL(@RequestBody String longURL) {
+    @PostMapping(
+        consumes = {MediaType.APPLICATION_JSON_VALUE}, 
+        produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> generateShortURL(@RequestBody Map<String, String> requestBody) {
         var response = new HashMap<String, String>();
+        var longURL = requestBody.get("longURL");
         try {
-            var uri = new URL(longURL).toURI();
+            new URL(longURL).toURI();
         } catch (Exception e) {
             e.printStackTrace();
             response.put("message", "failed");
@@ -67,6 +71,7 @@ public class RedirectController {
         response.put("message", "success");
         response.put("longURL", longURL);
         response.put("shortURL", shortURLLink);
+        System.out.println("longURL : " + longURL);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
