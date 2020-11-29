@@ -43,7 +43,9 @@ class App extends React.Component {
 
     const container = {
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 
     return (
