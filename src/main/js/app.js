@@ -1,6 +1,7 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -39,9 +40,15 @@ class App extends React.Component {
   }
 
   render() {
+
+    const container = {
+      display: 'flex',
+      flexDirection: 'column'
+    }
+
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form style={container} onSubmit={this.handleSubmit}>
           <input
             name="long-url"
             type="url"
