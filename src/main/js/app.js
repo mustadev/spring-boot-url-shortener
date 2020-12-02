@@ -80,36 +80,35 @@ class App extends React.Component {
       },
       result: {
         container: {
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginTop: '50px',
-          backgroundColor: '#7bedb3',
-          border: 'solid 1px #0ac365',
-          padding: '5px',
-          borderRadius: '10px',
-          width: '100%',
-          maxWidth: '350px'
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "50px",
+          backgroundColor: "#7bedb3",
+          border: "solid 1px #0ac365",
+          padding: "5px",
+          borderRadius: "10px",
+          width: "100%",
+          maxWidth: "350px",
         },
 
         url: {
-          textDecoration: 'none',
-          color: '#003d63',
-          fontSize: '20px',
-          padding: '5px 20px'
+          textDecoration: "none",
+          color: "#003d63",
+          fontSize: "20px",
+          padding: "5px 20px",
         },
-        
-        copy: {
-          padding: '5px 20px',
-          fontSize: '20px',
-          fontWeight: 'bold',
-          color: 'white',
-          backgroundColor: 'transparent',
-          border: 'solid 1px #057a3f',
-          borderRadius: '10px',
-          textTransform: 'uppercase'
-        }
 
-      }
+        copy: {
+          padding: "5px 20px",
+          fontSize: "20px",
+          fontWeight: "bold",
+          color: "white",
+          backgroundColor: "transparent",
+          border: "solid 1px #057a3f",
+          borderRadius: "10px",
+          textTransform: "uppercase",
+        },
+      },
     };
 
     return (
@@ -130,10 +129,14 @@ class App extends React.Component {
           </button>
         </form>
 
-        <div style={styles.result.container}>
-          <a href="#" style={styles.result.url}>short URL</a>
-          <button style={styles.result.copy}>Copy</button>
-        </div>
+        {this.state.shortURL.length !== 0 ? (
+          <div style={styles.result.container}>
+            <a href={this.state.shortURL} style={styles.result.url}>
+              {this.state.shortURL}
+            </a>
+            <button style={styles.result.copy}>Copy</button>
+          </div>
+        ) : null}
       </div>
     );
   }
