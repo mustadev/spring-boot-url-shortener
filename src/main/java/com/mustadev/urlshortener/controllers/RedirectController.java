@@ -70,7 +70,7 @@ public class RedirectController {
         var shortURLLink = this.encode(shortURL.getId());
         response.put("message", "success");
         response.put("longURL", longURL);
-        response.put("shortURL", shortURLLink);
+        response.put("shortURL", "http://localhost:8080/short/" + shortURLLink);
         System.out.println("longURL : " + longURL);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
