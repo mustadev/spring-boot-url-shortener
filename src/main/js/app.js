@@ -7,10 +7,22 @@ class App extends React.Component {
     this.state = { longURL: "", shortURL: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.copyShortLink = this.copyShortLink.bind(this);
   }
 
   componentDidMount() {}
 
+  copyShortLink(event) {
+    console.log("hello")
+    navigator.clipboard
+      .writeText(this.state.shortURL)
+      .then(() => {
+        event.target.value = "copied";
+      })
+      .catch((err) => {
+        event.target.value = "copy failed";
+      });
+  }
   handleChange(event) {
     this.setState({ longURL: event.target.value });
   }
@@ -134,7 +146,9 @@ class App extends React.Component {
             <a href={this.state.shortURL} style={styles.result.url}>
               {this.state.shortURL}
             </a>
-            <button style={styles.result.copy}>Copy</button>
+            <button style={styles.result.copy} onClick={this.copyShortLink}>
+              Copy
+            </button>
           </div>
         ) : null}
       </div>
