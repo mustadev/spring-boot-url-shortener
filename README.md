@@ -4,8 +4,8 @@ this an implementation of of simple url shortener using **Sping Boot** and **Ang
 ## Features
 - [x] Spring boot Back End.
 - [ ] API docs.
-- [ ] React Front End.
-- [ ] TailwindCSS CSS Framework.
+- [X] React Front End.
+- [X] Easy link copy
 - [ ] Docker Depeloyment.
 
 ## Resources:
