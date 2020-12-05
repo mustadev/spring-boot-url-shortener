@@ -146,9 +146,7 @@ class App extends React.Component {
             <a href={this.state.shortURL} style={styles.result.url}>
               {this.state.shortURL}
             </a>
-            <button style={styles.result.copy} onClick={this.copyShortLink}>
-              Copy
-            </button>
+            <input type="button" style={styles.result.copy} onClick={this.copyShortLink} value="Copy"/>
           </div>
         ) : null}
       </div>
