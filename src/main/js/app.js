@@ -4,7 +4,7 @@ const ReactDOM = require("react-dom");
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { longURL: "", shortURL: "" , error: false};
+    this.state = { longURL: "", shortURL: "", error: {status: false, message: ""} };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.copyShortLink = this.copyShortLink.bind(this);
@@ -29,7 +29,7 @@ class App extends React.Component {
 
   handleSubmit(event) {
     console.log("A name was submitted: " + this.state.longURL);
-    
+
     fetch("http://localhost:8080/short", {
       method: "POST",
       headers: {
@@ -39,23 +39,26 @@ class App extends React.Component {
       body: JSON.stringify({ longURL: this.state.longURL }),
     })
       .then((response) => {
-        console.log(
-          "response content type",
-          response.headers.get("content-type")
-        );
-        console.debug(response);
-        return response.json();
-      })
-      .then((response) => {
+        if(response.ok){
+          return response.json();
+        }else {
+          return response.json().then(err =>{
+            throw new Error(err.error);
+          })
+        }
+      }).then(response => {
         this.setState({
           shortURL: response.shortURL,
         });
-        console.log(response);
-      }).catch((err) => {
-        this.setState({error: true});
-
+      })
+      .catch((err) => {
+        console.debug(err);
+        this.setState({ error: {status: true, message: err.message} });
+        setTimeout(() => {
+          this.setState({error: {status: false, message: ""}});
+        }, 2000);
       });
-      event.preventDefault();
+    event.preventDefault();
   }
 
   render() {
@@ -125,7 +128,7 @@ class App extends React.Component {
           textTransform: "uppercase",
         },
         error: {
-          color: '#d10f08',
+          color: "#d10f08",
           backgroundColor: "#f5b0ae",
           border: "solid 1px #d10f08",
           padding: "5px",
@@ -168,11 +171,7 @@ class App extends React.Component {
           </div>
         ) : null}
 
-        {this.state.error ? (
-          <p style={styles.result.error}>
-            Error !
-          </p>
-        ) : null}
+        {this.state.error.status ? <p style={styles.result.error}>Error: {this.state.error.message} !</p> : null}
       </div>
     );
   }
