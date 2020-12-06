@@ -4,7 +4,7 @@ const ReactDOM = require("react-dom");
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { longURL: "", shortURL: "" };
+    this.state = { longURL: "", shortURL: "" , error: false};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.copyShortLink = this.copyShortLink.bind(this);
@@ -13,7 +13,7 @@ class App extends React.Component {
   componentDidMount() {}
 
   copyShortLink(event) {
-    console.log("hello")
+    console.log("hello");
     navigator.clipboard
       .writeText(this.state.shortURL)
       .then(() => {
@@ -29,6 +29,7 @@ class App extends React.Component {
 
   handleSubmit(event) {
     console.log("A name was submitted: " + this.state.longURL);
+    
     fetch("http://localhost:8080/short", {
       method: "POST",
       headers: {
@@ -50,8 +51,11 @@ class App extends React.Component {
           shortURL: response.shortURL,
         });
         console.log(response);
+      }).catch((err) => {
+        this.setState({error: true});
+
       });
-    event.preventDefault();
+      event.preventDefault();
   }
 
   render() {
@@ -120,6 +124,15 @@ class App extends React.Component {
           borderRadius: "10px",
           textTransform: "uppercase",
         },
+        error: {
+          color: '#d10f08',
+          backgroundColor: "#f5b0ae",
+          border: "solid 1px #d10f08",
+          padding: "5px",
+          borderRadius: "10px",
+          width: "100%",
+          maxWidth: "350px",
+        },
       },
     };
 
@@ -130,7 +143,7 @@ class App extends React.Component {
           <input
             style={styles.form.input}
             name="long-url"
-            type="url"
+            type="text"
             value={this.state.value}
             onChange={this.handleChange}
             placeholder="enter valid url"
@@ -146,8 +159,19 @@ class App extends React.Component {
             <a href={this.state.shortURL} style={styles.result.url}>
               {this.state.shortURL}
             </a>
-            <input type="button" style={styles.result.copy} onClick={this.copyShortLink} value="Copy"/>
+            <input
+              type="button"
+              style={styles.result.copy}
+              onClick={this.copyShortLink}
+              value="Copy"
+            />
           </div>
+        ) : null}
+
+        {this.state.error ? (
+          <p style={styles.result.error}>
+            Error !
+          </p>
         ) : null}
       </div>
     );
