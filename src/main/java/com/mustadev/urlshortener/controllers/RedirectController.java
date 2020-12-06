@@ -59,7 +59,7 @@ public class RedirectController {
         try {
             new URL(longURL).toURI();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             response.put("message", "failed");
             response.put("error", "mal formed URL: " + longURL);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
