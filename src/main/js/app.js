@@ -141,7 +141,7 @@ class App extends React.Component {
 
     return (
       <div style={styles.container}>
-        <h1>Spring boot Shortner</h1>
+        <h1>Spring boot URL Shortner</h1>
         <form style={styles.form.container} onSubmit={this.handleSubmit}>
           <input
             style={styles.form.input}
