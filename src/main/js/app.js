@@ -146,7 +146,7 @@ class App extends React.Component {
           <input
             style={styles.form.input}
             name="long-url"
-            type="text"
+            type="url"
             value={this.state.value}
             onChange={this.handleChange}
             placeholder="enter valid url"
