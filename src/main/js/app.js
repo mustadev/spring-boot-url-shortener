@@ -141,7 +141,7 @@ class App extends React.Component {
 
     return (
       <div style={styles.container}>
-        <h1>Spring boot URL Shortner</h1>
+        <h1>Spring Boot URL Shortner</h1>
         <form style={styles.form.container} onSubmit={this.handleSubmit}>
           <input
             style={styles.form.input}
@@ -149,7 +149,7 @@ class App extends React.Component {
             type="url"
             value={this.state.value}
             onChange={this.handleChange}
-            placeholder="enter valid url"
+            placeholder="Enter a valid URL"
             required
           />
           <button style={styles.form.submit} name="submit" type="submit">
