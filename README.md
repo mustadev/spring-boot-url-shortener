@@ -12,6 +12,11 @@ this an implementation of of simple url shortener using **Sping Boot** and **Ang
 - [System Design for Big Data [tinyurl]](http://n00tc0d3r.blogspot.com/)
 - [How do I create a URL shortener? [stackoverflow]](https://stackoverflow.com/questions/742013/how-do-i-create-a-url-shortener)
 ## Run 
+### Back-End
 ```bash
-docker-composer up
+mvn spring-boot:run
+```
+### Front-End
+```bash
+npm run watch
 ```
